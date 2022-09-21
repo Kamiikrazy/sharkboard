@@ -17,7 +17,7 @@ app = FastAPI(
     },
     redoc_url=None,
     docs_url=None,
-    )
+)
 
 app.include_router(testing.router, tags=["testing"])
 
