@@ -1,0 +1,38 @@
+<!doctype html> <!-- Important: must specify -->
+<html>
+  <head>
+    <meta charset="utf-8"> <!-- Important: rapi-doc uses utf8 characters -->
+    <script type="module" src="https://unpkg.com/rapidoc/dist/rapidoc-min.js"></script>
+  </head>
+  <body>
+    <rapi-doc
+    spec-url = "/openapi.json"
+    theme = "dark"
+    render-style = "read"
+    show-header = 'false'
+    bg-color="#23272A"
+    text-color="#F3F4F6"
+    font-size="large"
+    nav-bg-color=""
+    nav-text-color=""
+    nav-hover-bg-color=""
+    nav-hover-text-color=""
+    nav-accent-color="#7289DA"
+    primary-color="#7289DA"
+    sort-tags="true"
+    >
+    <div slot="nav-logo" style="display: flex; align-items: center; justify-content: center;">
+        <span style="color:#fff">
+            <b>Admin panel</b>
+        </span>
+    </div>
+    <div slot="auth">
+        <div style="padding: 1rem;margin-top: 2rem;margin-bottom: 2rem;border: 0 solid var(--tip-red);border-left-width: 4px;background: var(--dark-bg);border-radius: 1px">
+            <span style="color: #E5E7EB;font-weight: bold;">
+                TIP: You can use this tool to test out some of the endpoints right inside of the docs! Why not give it a spin?
+            </span>
+        </div>
+    </div>
+    </rapi-doc>
+  </body>
+</html>
