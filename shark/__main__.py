@@ -21,6 +21,7 @@ app = FastAPI(
 
 app.include_router(testing.router, tags=["testing"])
 
+
 @app.on_event("startup")
 async def startup_event():
     logger.debug(f"Server starting at: {datetime.now()}")
