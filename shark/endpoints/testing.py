@@ -12,7 +12,7 @@ models.Base.metadata.create_all(bind=engine)
 
 
 @router.get("/testing/")
-async def test(request: Request, db):
+async def test(request: Request):
     return {"message": "Wow, test succesful!"}
 
 
