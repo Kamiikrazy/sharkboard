@@ -17,13 +17,14 @@ app = FastAPI(
     },
     redoc_url=None,
     docs_url=None,
-    )
+)
 
 app.include_router(testing.router, tags=["testing"])
 
+
 @app.on_event("startup")
 async def startup_event():
-    logger.debug(f"Server starting at: {datetime.now()}")
+    logger.debug(f"Server started at: {datetime.now()}")
 
 
 @app.get("/")
@@ -37,4 +38,4 @@ async def docs(request: Request):
 
 
 if __name__ == "__main__":
-    uvicorn.run("shark.__main__:app", host="127.0.0.1", port=5001, reload=True)
+    uvicorn.run("shark.__main__:app", host="0.0.0.0", port=5001, reload=True)
