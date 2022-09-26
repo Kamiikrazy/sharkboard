@@ -51,5 +51,5 @@ async def post_author(author: schemas.Author, db: AsyncSession = Depends(get_db)
 async def get_author(db: AsyncSession = Depends(get_db)):
     book = select(models.Author)
     result = await db.execute(book)
-    curr = result.scalars().first()
+    curr = result.scalars().all()
     return curr
