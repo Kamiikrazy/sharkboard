@@ -10,12 +10,12 @@ bar = {
     "title": "some fancy title",
     "rating": 10,
     "author": "amazing writer idk",
-    "author_id": 2,
+    "author_id": 1,
 }
 
-# assuming that you host in "127.0.0.1"
-requests.post("http://127.0.0.1:5001/book/", json=bar)
+# assuming that you host in "127.0.0.1:5001"
 requests.post("http://127.0.0.1:5001/author/", json=foo)
+requests.post("http://127.0.0.1:5001/book/", json=bar)
 a = requests.get("http://127.0.0.1:5001/book/")
 b = requests.get("http://127.0.0.1:5001/author/")
 # just to access the data

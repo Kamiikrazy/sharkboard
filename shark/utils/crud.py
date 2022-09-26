@@ -1,9 +1,8 @@
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from shark.utils.database import SessionLocal
 
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+async def get_db() -> AsyncSession:
+    async with SessionLocal() as session:
+        yield session

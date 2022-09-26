@@ -1,11 +1,12 @@
 from datetime import datetime
-from loguru import logger
+
 import uvicorn
+from fastapi import FastAPI, Request
+from loguru import logger
 
 from shark.constants import Config
 from shark.endpoints import testing
-
-from fastapi import FastAPI, Request
+from shark.utils.database import init_models
 
 app = FastAPI(
     title=Config.TITLE,
@@ -24,6 +25,7 @@ app.include_router(testing.router, tags=["testing"])
 
 @app.on_event("startup")
 async def startup_event():
+    await init_models()
     logger.debug(f"Server started at: {datetime.now()}")
 
 

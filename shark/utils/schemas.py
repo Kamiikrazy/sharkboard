@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 # not done yet
 class Endpoint(BaseModel):
     id: int

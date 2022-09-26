@@ -1,7 +1,9 @@
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Float, Boolean
+from sqlalchemy import Boolean, Column, DateTime, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+
 from .database import Base
+
 
 # not done
 class Test(Base):

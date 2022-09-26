@@ -1,18 +1,18 @@
-from fastapi import APIRouter, Request, Depends
+from fastapi import APIRouter, Depends, Request
+from sqlalchemy import insert
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
 
-from sqlalchemy.orm import Session
-
-from shark.utils.crud import get_db
 from shark.utils import models, schemas
-from shark.utils.database import engine
+from shark.utils.crud import get_db
 
 router = APIRouter()
 
-models.Base.metadata.create_all(bind=engine)
+# models.Base.metadata.create_all(bind=engine)
 
 
 @router.get("/testing/")
-async def test(request: Request, db):
+async def test(request: Request):
     return {"message": "Wow, test succesful!"}
 
 
@@ -22,30 +22,34 @@ async def test_name(request: Request, name: str):
 
 
 @router.post("/book/", response_model=schemas.Book)
-async def post_book(book: schemas.Book, db: Session = Depends(get_db)):
-    db_book = models.Book(
+async def post_book(book: schemas.Book, db: AsyncSession = Depends(get_db)):
+    db_book = insert(models.Book).values(
         title=book.title, rating=book.rating, author_id=book.author_id
     )
-    db.add(db_book)
-    db.commit()
-    return db_book
-
-
-@router.get("/book/")
-async def get_book(db: Session = Depends(get_db)):
-    book = db.query(models.Book).all()
+    await db.execute(db_book)
+    await db.commit()
     return book
 
 
-@router.post("/author/", response_model=schemas.Author)
-async def post_author(author: schemas.Author, db: Session = Depends(get_db)):
-    db_author = models.Author(name=author.name, age=author.age)
-    db.add(db_author)
-    db.commit()
-    return db_author
+@router.get("/book/")
+async def get_book(db: AsyncSession = Depends(get_db)):
+    book = select(models.Book)
+    result = await db.execute(book)
+    curr = result.scalars().all()
+    return curr
+
+
+@router.post("/author/")
+async def post_author(author: schemas.Author, db: AsyncSession = Depends(get_db)):
+    db_author = insert(models.Author).values(name=author.name, age=author.age)
+    await db.execute(db_author)
+    await db.commit()
+    return author
 
 
 @router.get("/author/")
-async def get_author(db: Session = Depends(get_db)):
-    author = db.query(models.Author).all()
-    return author
+async def get_author(db: AsyncSession = Depends(get_db)):
+    book = select(models.Author)
+    result = await db.execute(book)
+    curr = result.scalars().first()
+    return curr
